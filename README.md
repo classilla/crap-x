@@ -179,7 +179,7 @@ All canonical instructions are 16-bit and consist of this basic form:
 
 * opcode: bits 0-3. There are 16 possible opcodes, but only 14 are defined.
 
-* GR field: bits 4-5. This specifies the GPR operand, though for some instructions, notably branches and I/O, this is used as a constant field.
+* GR field: bits 4-5. This specifies the GPR operand, though for some instructions, notably branches, this is used as a constant field.
 
 * XR field: bits 6-7. This specifies the GPR indexing the address, through for some instructions this is used as a constant field or ignored. If the XR field is zero, the address is indexed by zero and not the contents of GR0. Indexing still uses BR for the MSB of the effective address (i.e., indexing wraps within the current page instead of crossing into adjacent ones).
 
@@ -195,7 +195,7 @@ opcode | summary | GR | XR | operation
 `AND` (0xE) | signed add | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] &= OR
 `EOR` (0xF) | bitwise exclusive OR | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] ^= OR
 `HJ` (0x0) | halt-and-jump | ignored | index | SC = LSB(AD+GR[XR]/0), cleanly terminate program
-`JC` (0x2) | jump on condition | option | index | GR must == 0, 1, 2 or 3. if GR == 0: no-op. if GR == 1: if CC == 1, SC = MSB(BR) \| LSB(AD+GR[XR]/0). if GR == 2: if CC == 0, SC = MSB(BR) \| LSB(AD+GR[XR]/0). if GR == 3: SC = MSB(BR) \| LSB(AD+GR[XR]/0).
+`JC` (0x2) | jump on condition | option | index | if GR == 0: no-op. if GR == 1: if CC == 1, SC = MSB(BR) \| LSB(AD+GR[XR]/0). if GR == 2: if CC == 0, SC = MSB(BR) \| LSB(AD+GR[XR]/0). if GR == 3: SC = MSB(BR) \| LSB(AD+GR[XR]/0).
 `JNZ` (0x1) | jump if not zero | source | index | if GR[GR] != 0, SC = MSB(BR) \| LSB(AD+GR[XR]/0).
 `JSR` (0x3) | jump to subroutine | destination | index | GR[GR] = SC, OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, SC = OR, BR = OR & 0xFF00. Fault if the new BR is outside the maximum addressing range.
 `LAI` (0x8) | load 8-bit immediate | destination | index | GR[GR] = LSB(AD+GR[XR]/0)

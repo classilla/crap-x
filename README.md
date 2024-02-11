@@ -18,7 +18,7 @@ strongly page-based memory model and a very limited instruction set (COMP-X)
 using a specific assembler format (CAP-X).
 Although only intended as a means of skill assessment and never used as
 the native architecture of any known machine, it was implemented in
-software on the Oki Electronic OKITAC-4300b in 1980 and then by Casio and
+software on the Oki Electric OKITAC-4300b in 1980 and then by Casio and
 Sharp in various pocket computers from 1985, notably the Sharp PC-1440 and
 PC-1416G, and the Casio FX-770P family.
 
@@ -349,7 +349,7 @@ Options are selected by entering the letter and pressing ENTER.
 
 When trace mode is on, each step in execution is displayed after the instruction
 is retired. This consists of the SC (in decimal), the IR (in hex), and the
-three GPRs in signed decimal. Execution advances a single instruction each
+GPRs in signed decimal. Execution advances a single instruction each
 time by pressing ENTER alone. If
 you type D and press ENTER, you will return to the debugger; if you type T and
 press ENTER, tracing will be turned off.

@@ -191,19 +191,19 @@ All canonical instructions are 16-bit and consist of this basic form:
 
 opcode | summary | GR | XR | operation
 ---|---|---|---|---
-`ADD` (0xA) | bitwise AND | destination | index | OR = {MSB(BR) | LSB(AD+GR[XR]/0)}, GR[GR] += OR, CC = GR[GR] & 0x8000. Fault if integer overflow.
-`AND` (0xE) | signed add | destination | index | OR = {MSB(BR) | LSB(AD+GR[XR]/0)}, GR[GR] &= OR
-`EOR` (0xF) | bitwise exclusive OR | destination | index | OR = {MSB(BR) | LSB(AD+GR[XR]/0)}, GR[GR] ^= OR
+`ADD` (0xA) | bitwise AND | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] += OR, CC = GR[GR] & 0x8000. Fault if integer overflow.
+`AND` (0xE) | signed add | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] &= OR
+`EOR` (0xF) | bitwise exclusive OR | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] ^= OR
 `HJ` (0x0) | halt-and-jump | ignored | index | SC = LSB(AD+GR[XR]/0), cleanly terminate program
-`JC` (0x2) | jump on condition | option | index | GR must == 0, 1, 2 or 3. if GR == 0: no-op. if GR == 1: if CC == 1, SC = MSB(BR) | LSB(AD+GR[XR]/0). if GR == 2: if CC == 0, SC = MSB(BR) | LSB(AD+GR[XR]/0). if GR == 3: SC = MSB(BR) | LSB(AD+GR[XR]/0).
-`JNZ` (0x1) | jump if not zero | source | index | if GR[GR] != 0, SC = MSB(BR) | LSB(AD+GR[XR]/0).
-`JSR` (0x3) | jump to subroutine | destination | index | GR[GR] = SC, OR = {MSB(BR) | LSB(AD+GR[XR]/0)}, SC = OR, BR = OR & 0xFF00. Fault if the new BR is outside the maximum addressing range.
+`JC` (0x2) | jump on condition | option | index | GR must == 0, 1, 2 or 3. if GR == 0: no-op. if GR == 1: if CC == 1, SC = MSB(BR) \| LSB(AD+GR[XR]/0). if GR == 2: if CC == 0, SC = MSB(BR) \| LSB(AD+GR[XR]/0). if GR == 3: SC = MSB(BR) \| LSB(AD+GR[XR]/0).
+`JNZ` (0x1) | jump if not zero | source | index | if GR[GR] != 0, SC = MSB(BR) \| LSB(AD+GR[XR]/0).
+`JSR` (0x3) | jump to subroutine | destination | index | GR[GR] = SC, OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, SC = OR, BR = OR & 0xFF00. Fault if the new BR is outside the maximum addressing range.
 `LAI` (0x8) | load 8-bit immediate | destination | index | GR[GR] = LSB(AD+GR[XR]/0)
-`LD` (0xC) | load from memory | destination | index | OR = {MSB(BR) | LSB(AD+GR[XR]/0)}, GR[GR] = OR
+`LD` (0xC) | load from memory | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] = OR
 `READ` (0x5) | read from I/O | destination | 0 | XR must == 0. If AD == 10, display prompt with destination register name and radix, and accept signed decimal value from keyboard and deposit in GR[GR]. Repeat if unacceptable input. If AD == 16, display prompt with destination register name and radix, and accept hexadecimal value from keyboard and deposit in GR[GR]. Repeat if unacceptable input. If AD == 0 (*CRAP-X only*), read single byte from standard input and deposit low 7 bits in GR[GR]; EOF terminates the program cleanly. If AD == 1 (*CRAP-X only*), accept signed decimal value from keyboard without displaying prompt and deposit in GR[GR]. Repeat if unacceptable input. All other AD values/radices are invalid.
 `SFT` (0x4) | signed bitshift | destination | option | XR must == 0 or 1. If XR == 0, shift GR[GR] AD bits right, preserving the sign of the resulting value. If XR == 1, shift GR[GR] AD bits left, clearing the sign bit. AD may be greater than 16.
-`ST` (0xD) | store to memory | source | index | {MSB(BR) | LSB(AD+GR[XR]/0)} = GR[GR]
-`SUB` (0xB) | signed subtract | destination | index | OR = {MSB(BR) | LSB(AD+GR[XR]/0)}, GR[GR] -= OR, CC = GR[GR] & 0x8000. Fault if integer underflow.
+`ST` (0xD) | store to memory | source | index | {MSB(BR) \| LSB(AD+GR[XR]/0)} = GR[GR]
+`SUB` (0xB) | signed subtract | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] -= OR, CC = GR[GR] & 0x8000. Fault if integer underflow.
 `WRITE` (0x6) | write to I/O | source | 0 | XR must == 0. If AD == 10, display source register name, radix and signed decimal contents. If AD == 16, display source register name, radix and hexadecimal contents. If AD == 0 (*CRAP-X only*), emit low 7 bits of GR[GR] as an ASCII character to standard output. If AD == 1 (*CRAP-X only*) display signed decimal contents without other information. All other AD values/radices are invalid.
 
 Opcodes 0x7 and 0x9 are illegal. Invalid encodings and illegal instructions fault.

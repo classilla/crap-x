@@ -1,0 +1,7 @@
+   :START:0
+L  :LD   :0:OPC
+   :ST   :0:PTR
+PTR:HJ   :0:65
+OPC:CONST:7000
+   :END  :L
+

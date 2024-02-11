@@ -1,0 +1,5 @@
+   :START:0
+L  :JSR  :0:DIE
+DIE:CONST:FFFF
+   :END  :L
+

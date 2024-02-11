@@ -1,0 +1,54 @@
+
+	# rot-13 in enhanced cap-x/comp-x
+
+	:start:0
+l	:read:0:0
+	:st:0:char
+
+	# comparison is just subtraction!
+
+	# if char - ('z'+1) is positive/zero, print as is
+	:sub:0:zlower
+	:jc:2:print
+
+	# add 26: if zero or greater, it's a lower case letter
+	:add:0:alphall
+	:jc:2:lcase
+
+	# 96-90 = 6
+	# add 6: if zero or greater, it's not an upper case letter, print
+	:add:0:six
+	:jc:2:print
+
+	# add 26: if zero or greater, it's an upper case letter
+	:add:0:alphall
+	:jc:2:ucase
+
+	# fell thru
+print	:ld:0:char
+printt	:write:0:0
+	:jc:3:l
+
+	# in both situations:
+	# we have a letter 0-25 that we need to make 13-25 and 0-12
+lcase	:sub:0:thirteen
+	:jc:2:lcasep
+	:add:0:alphall
+lcasep	:add:0:alower
+	:jc:3:printt
+
+ucase	:sub:0:thirteen
+	:jc:2:ucasep
+	:add:0:alphall
+ucasep	:add:0:aupper
+	:jc:3:printt
+
+char	:resv:1
+zlower	:const:007b
+alower	:const:"a"
+aupper	:const:"A"
+six	:const:0006
+alphall	:const:001a
+thirteen:const:000d
+
+	:end:l

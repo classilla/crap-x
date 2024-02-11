@@ -1,0 +1,11 @@
+   :START:0
+NP :CONST:0001
+W  :CONST:0000
+W2 :CONST:0000
+   :START:128
+L  :LD   :1:NP
+   :LAI  :0:65
+   :ST   :0:W:1
+   :HJ   :0:L
+   :END  :L
+

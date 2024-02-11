@@ -1,0 +1,14 @@
+   :START:0
+L  :LAI  :1:65
+   :JSR  :0:NP
+   :HJ   :0:0
+W  :CONST:0000
+NP :ADCON:NPC
+   :START:256
+NPC:ST   :0:LR
+   :ST   :1:3
+   :JSR  :0:LR
+W2 :CONST:0000
+LR :CONST:0000
+   :END  :L
+

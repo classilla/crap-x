@@ -1,0 +1,10 @@
+:start:0
+go:read:0:10
+:read:1:10
+:st:1:tad
+:add:0:tad
+:write:0:10
+:hj:0:go
+tad:resv:1
+:end:go
+

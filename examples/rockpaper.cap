@@ -1,0 +1,243 @@
+	:start:0
+
+	# init PRNG
+l	:jsr:0:xorsinit
+	# display hello banner
+	:jsr:0:hellop
+	# clear scores
+	:lai:0:0
+	:st:0:you
+	:st:0:me
+
+	# get user's move
+lup	:jsr:0:promptp
+	:st:1:yom
+
+	# get mine
+rps	:jsr:0:xorsgen
+	:and:3:bit
+	:st:3:mem
+	:jnz:3:showmove
+	:jc:3:rps
+
+	# show my move
+showmove:jsr:0:mymovep
+	# tie?
+same	:eor:3:yom
+	:jnz:3:paperr
+	:jc:3:sho
+	# my paper covers your rock?
+paperr	:lai:0:73 # "I"
+	:write:0:0
+	:lai:0:32 # " "
+	:write:0:0
+	:ld:3:mem
+	:eor:3:bit
+	:jnz:3:paa
+	:eor:1:bio
+	:jnz:1:paa
+	:jc:3:lus
+	# your paper covers my rock?
+paa	:ld:3:mem
+	:ld:1:yom
+	:eor:1:bit
+	:jnz:1:score
+	:eor:3:bio
+	:jnz:3:score
+	:jc:3:win
+
+	# no, subtract the two; highest wins
+score	:ld:3:mem
+	:sub:3:yom
+	:jc:1:lus
+	# I win
+win	:lai:0:1
+	:add:0:me
+	:st:0:me
+	:lai:0:119
+	:write:0:0
+	:lai:0:105
+	:write:0:0
+	:lai:0:110
+	:write:0:0
+	:lai:0:44
+	:write:0:0
+	:jc:3:sho
+	# I lose
+lus	:lai:1:1
+	:add:1:you
+	:st:1:you
+	:lai:0:108
+	:write:0:0
+	:lai:0:111
+	:write:0:0
+	:lai:0:115
+	:write:0:0
+	:lai:0:101
+	:write:0:0
+	:lai:0:44
+	:write:0:0
+
+	# update score
+sho	:lai:0:32
+	:write:0:0
+	:ld:0:me
+	:ld:1:you
+	:write:0:1
+	:lai:0:45
+	:write:0:0
+	:write:1:1
+	:lai:0:10
+	:write:0:0
+	:jc:3:lup
+
+you	:const:0000
+yom	:const:0000
+me	:const:0000
+mem	:const:0000
+bit	:const:0003
+bio	:const:0001
+xorsinit:adcon:xoc
+xorsgen	:adcon:xos
+hellop	:adcon:hello
+promptp	:adcon:prompt
+mymovep	:adcon:mymove
+
+	# Xorshift routine
+	:start:256
+
+rtn	:resv:1
+xot	:resv:1
+xoc	:st:0:rtn
+	:jnz:3:xod
+	:lai:3:1
+xod	:st:3:xot
+	:jsr:0:rtn
+
+xos	:st:0:rtn
+	:ld:3:xot
+	:sft:3:7:1
+	:eor:3:xot
+	:st:3:xot
+	:sft:3:9
+	:eor:3:xot
+	:st:3:xot
+	:sft:3:8:1
+	:eor:3:xot
+	:st:3:xot
+	:jsr:0:rtn
+
+	# display banner
+	:start:512
+
+rtn2	:resv:1
+hello	:lai:1:0
+	:st:0:rtn2
+hellol	:ld:0:hellos:1
+	:jnz:0:hellol2
+	:jsr:0:rtn2
+hellol2	:write:0:0
+	:add:1:one
+	:jc:3:hellol
+hellos	:const:"rock paper scissors for enhanced crap-x/comp-x"
+	:const:0a
+	:const:00
+one	:const:0001
+
+	# accept move from user
+	:start:768
+
+rtn3	:resv:1
+prompt	:st:0:rtn3
+prompti	:lai:1:0
+promptl	:ld:0:prompts:1
+	:jnz:0:promptl2
+promptr	:read:0:0
+	:st:0:ptmp
+	:eor:0:plf
+	:jnz:0:plfn
+	:jc:3:promptr
+plfn	:ld:0:ptmp
+	:eor:0:parr
+	:jnz:0:parrn
+	:lai:1:3
+	:jsr:0:rtn3
+parrn	:ld:0:ptmp
+	:eor:0:ppaper
+	:jnz:0:ppapern
+	:lai:1:1
+	:jsr:0:rtn3
+ppapern	:ld:0:ptmp
+	:eor:0:pscis
+	:jnz:0:prompti
+	:lai:1:2
+	:jsr:0:rtn3
+promptl2:write:0:0
+	:add:1:pone
+	:jc:3:promptl
+prompts	:const:"type r for rock, p for paper, s for scissors: "
+	:const:00
+ptmp	:resv:1
+plf	:const:0a
+parr	:const:"r"
+ppaper	:const:"p"
+pscis	:const:"s"
+pone	:const:0001
+
+	# show my move
+	:start:1024
+
+rtn4	:resv:1
+mymove	:st:0:rtn4
+	; use gr2 to avoid stomping on gr1 and 3
+mymovei	:lai:2:0
+mymovel	:ld:0:mymoves:2
+	:jnz:0:mymovel2
+	:lai:2:0
+	:st:3:mtmp
+	:eor:3:mthree
+	:jnz:3:mthreen
+mthreel	:ld:0:mymoves3:2
+	:jnz:0:mthreel2
+	:ld:3:mtmp
+	:jsr:0:rtn4
+mthreel2:write:0:0
+	:add:2:mone
+	:jc:3:mthreel
+mthreen	:ld:3:mtmp
+	:eor:3:mtwo
+	:jnz:3:mtwon
+mtwol	:ld:0:mymoves2:2
+	:jnz:0:mtwol2
+	:ld:3:mtmp
+	:jsr:0:rtn4
+mtwol2	:write:0:0
+	:add:2:mone
+	:jc:3:mtwol
+mtwon	:ld:0:mymoves1:2
+	:jnz:0:mtwon2
+	:ld:3:mtmp
+	:jsr:0:rtn4
+mtwon2	:write:0:0
+	:add:2:mone
+	:jc:3:mtwon
+mymovel2:write:0:0
+	:add:2:mone
+	:jc:3:mymovel
+mymoves	:const:"I play "
+	:const:00
+mymoves3:const:"rock"
+	:const:0a
+	:const:00
+mymoves2:const:"scissors"
+	:const:0a
+	:const:00
+mymoves1:const:"paper"
+	:const:0a
+	:const:00
+mtmp	:resv:1
+mthree	:const:0003
+mtwo	:const:0002
+mone	:const:0001
+
+	:end:l

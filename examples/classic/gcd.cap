@@ -1,0 +1,22 @@
+   :START:0
+L0 :READ :0:10
+   :READ :1:10
+   :ST   :0:M
+   :ST   :1:N
+L1 :LD   :0:M
+   :SUB  :0:N
+   :JNZ  :0:L2
+   :LD   :0:M
+   :WRITE:0:10
+   :HJ   :0:L0
+L2 :JC   :2:L3
+   :LD   :0:N
+   :SUB  :0:M
+   :ST   :0:N
+   :JC   :3:L1
+L3 :ST   :0:M
+   :JC   :3:L1
+M  :RESV :1
+N  :RESV :1
+   :END  :L0
+

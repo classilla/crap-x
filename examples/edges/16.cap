@@ -1,0 +1,8 @@
+   :START:253
+L  :LAI  :1:65
+   :JSR  :0:NP
+NP :CONST:0100
+   :START:256
+   :HJ   :0:65
+   :END  :L
+

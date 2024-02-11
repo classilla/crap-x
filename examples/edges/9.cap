@@ -1,0 +1,7 @@
+   :START:0
+L  :LD   :0:PTR
+   :ST   :0:PTR
+   :HJ   :0:0
+PTR:CONST:0201
+   :END   :L
+

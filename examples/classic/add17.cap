@@ -1,0 +1,50 @@
+   :START:0
+L  :READ :1:16
+   :ST   :1:M
+   :AND  :1:BM1
+   :ST   :1:TM1
+   :READ :0:16
+   :ST   :0:N
+   :AND  :0:BM1
+   :ADD  :0:TM1
+   :ST   :0:TM1
+   :AND  :0:BM1
+   :ST   :0:TM2
+   :LD   :0:TM1
+   :SFT  :0:8
+   :ST   :0:TM1
+   :LD   :0:M
+   :SFT  :0:8
+   :AND  :0:BM1
+   :ST   :0:TM3
+   :LD   :0:N
+   :SFT  :0:8
+   :AND  :0:BM1
+   :ADD  :0:TM3
+   :ADD  :0:TM1
+   :ST   :0:TM3
+   :AND  :0:BM1
+   :ST   :0:TM1
+   :SFT  :0:8:1
+   :EOR  :0:TM2
+   :LD   :1:TM1
+   :AND  :1:BM2
+   :JNZ  :1:FIX
+X  :LD   :1:TM3
+   :SFT  :1:8
+   :AND  :1:ONE
+   :WRITE:0:16
+   :WRITE:1:16
+   :HJ   :0:L
+FIX:EOR  :0:NEG
+   :JC   :3:X
+M  :RESV :1
+N  :RESV :1
+BM1:CONST:00FF
+BM2:CONST:0080
+NEG:CONST:8000
+ONE:CONST:0001
+TM1:RESV :1
+TM2:RESV :1
+TM3:RESV :1
+   :END  :L

@@ -1,0 +1,108 @@
+
+	# proof (eh) of turing completeness: a subleq machine in CAP-X/COMP-X
+
+	:start:0
+init	:ld:1:0
+
+	# get a
+lup	:ld:3:code:1
+	# get b
+	:ld:2:code1:1
+	# check sign: if negative, treat as print
+	:add:2:zero
+	:jc:1:print
+	# compute b - a
+	:st:2:ptr
+	:ld:2:code:2
+	:ld:3:code:3
+	:st:3:temp
+	:sub:2:temp
+	# and store
+	:ld:3:ptr
+	:st:2:code:3
+	# negative or zero, branch
+	:jc:1:zneg
+	:jnz:2:next
+	:jc:3:zneg
+	# not negative, non-zero, go to next instruction
+next	:add:1:three
+	:jc:3:lup
+
+zneg	:ld:1:code2:1
+	# if negative destination, halt
+	:add:1:zero
+	:jc:1:halt
+	:jc:3:lup
+
+print	:ld:3:code:3
+	:write:3:0
+	:add:1:three
+	:jc:3:lup
+	
+halt	:hj:0:0
+
+zero	:const:0000
+three	:const:0003
+ptr	:resv:1
+temp	:resv:1
+
+	# subleq code goes here
+	# the three code labels are needed for the first opcode
+
+code	:const:000c
+code1	:const:000c
+code2	:const:0003
+	
+	:const:0024
+	:const:0025
+	:const:0006
+
+	:const:0025
+	:const:000c
+	:const:0009
+
+	:const:0025
+	:const:0025
+	:const:000c
+
+	:const:0000
+	:const:ffff
+	:const:000f
+
+	:const:0026
+	:const:0024
+	:const:0012
+
+	:const:000c
+	:const:000c
+	:const:0015
+
+	:const:0035
+	:const:0025
+	:const:0018
+
+	:const:0025
+	:const:000c
+	:const:001b
+
+	:const:0025
+	:const:0025
+	:const:001e
+
+	:const:0024
+	:const:000c
+	:const:ffff
+
+	:const:0025
+	:const:0025
+	:const:0000
+
+	:const:0027
+	:const:0000
+	:const:ffff
+
+	:const:"Hello, world!"
+	:const:0a
+	:const:0035
+
+	:end:init

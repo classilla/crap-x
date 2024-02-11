@@ -1,0 +1,8 @@
+   :START:0
+L  :LD   :0:M
+   :ADD  :0:M
+   :WRITE:0:10
+   :HJ   :0:L
+M  :CONST:7FFF
+   :END  :L
+

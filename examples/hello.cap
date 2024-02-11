@@ -1,0 +1,16 @@
+
+	:start:0
+go	:lai:1:0
+loop	:ld:0:hello:1
+	:jnz:0:print
+	:hj:0:0
+print	:write:0:0
+	:add:1:one
+	:jc:3:loop
+
+one	:const:01
+hello	:const:"hello world"
+	:const:0a
+	:const:00
+
+	:end:go

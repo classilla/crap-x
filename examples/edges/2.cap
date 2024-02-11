@@ -1,0 +1,6 @@
+   :START:0
+L7 :CONST:7000
+L9 :CONST:9000
+   :HJ   :0:0
+   :END  :L7
+

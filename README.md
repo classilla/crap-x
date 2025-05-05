@@ -191,8 +191,8 @@ All canonical instructions are 16-bit and consist of this basic form:
 
 opcode | summary | GR | XR | operation
 ---|---|---|---|---
-`ADD` (0xA) | bitwise AND | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] += OR, CC = GR[GR] & 0x8000. Fault if integer overflow.
-`AND` (0xE) | signed add | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] &= OR
+`ADD` (0xA) | signed add | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] += OR, CC = GR[GR] & 0x8000. Fault if integer overflow.
+`AND` (0xE) | bitwise AND | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] &= OR
 `EOR` (0xF) | bitwise exclusive OR | destination | index | OR = {MSB(BR) \| LSB(AD+GR[XR]/0)}, GR[GR] ^= OR
 `HJ` (0x0) | halt-and-jump | ignored | index | SC = LSB(AD+GR[XR]/0), cleanly terminate program
 `JC` (0x2) | jump on condition | option | index | if GR == 0: no-op. if GR == 1: if CC == 1, SC = MSB(BR) \| LSB(AD+GR[XR]/0). if GR == 2: if CC == 0, SC = MSB(BR) \| LSB(AD+GR[XR]/0). if GR == 3: SC = MSB(BR) \| LSB(AD+GR[XR]/0).
